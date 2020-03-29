@@ -9,6 +9,7 @@ import java.beans.PropertyVetoException;
 import java.sql.*;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -17,8 +18,8 @@ import javax.swing.JOptionPane;
 public class JourneyDetails extends javax.swing.JInternalFrame  {
 
     Connection connection;
-    PreparedStatement preparedStatementCombo;
-    ResultSet resultSetCombo;
+    PreparedStatement preparedStatementCombo, preparedStatement;
+    ResultSet resultSetCombo, resultSet;
     /**
      * Creates new form JourneyDetails
      */
@@ -61,6 +62,11 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
         destinationLabel.setText("Destination");
 
         showButton.setText("Show");
+        showButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showButtonActionPerformed(evt);
+            }
+        });
 
         journeyDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -179,9 +185,31 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
         try {
             mainMenuHome.setSelected(true);
         } catch (PropertyVetoException ex) {
-           
+            JOptionPane.showMessageDialog(null,"Following Error Found!!!\n"+ex,"Error!!!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void showButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showButtonActionPerformed
+        String departure =(String) departureComboBox.getSelectedItem().toString();
+        String destination = (String) destinationComboBox.getSelectedItem().toString();
+        try {
+            String sql = "select pnr_no,ticket_id,f_code,jny_date,jny_time,src,dst from reservation where src = '"+departure+"' and dst = '"+destination+"'";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                journeyDetailsTable.setModel(DbUtils.resultSetToTableModel(
+                        resultSet));
+            }
+            else{
+                JOptionPane.showMessageDialog(null,
+                        "No Flights between Departure and Destination","Warning!!!",JOptionPane.WARNING_MESSAGE);
+            }
+            
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, sQLException, "SQL Error!!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_showButtonActionPerformed
 
     private void FillCombo(){
     try{
@@ -195,8 +223,8 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
             destinationComboBox.addItem(dst);
             departureComboBox.addItem(src);
         }
-    }catch(SQLException e){        
-        JOptionPane.showMessageDialog(null, e);
+    }catch(SQLException sQLException){        
+        JOptionPane.showMessageDialog(null, sQLException, "SQL Error!!!", JOptionPane.ERROR_MESSAGE);
     }
 }
     

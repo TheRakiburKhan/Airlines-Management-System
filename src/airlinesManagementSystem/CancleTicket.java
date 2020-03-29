@@ -5,6 +5,14 @@
  */
 package airlinesManagementSystem;
 
+import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author MD Rakibur Khan
@@ -15,6 +23,11 @@ public class CancleTicket
     /**
      * Creates new form CancleReservation
      */
+    Connection connection;
+    PreparedStatement preparedStatement;
+    ResultSet resultSet;
+    boolean alreadyClicked = false;
+    
     public CancleTicket() {
         initComponents();
     }
@@ -27,22 +40,242 @@ public class CancleTicket
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
-        );
+        titleLabel = new javax.swing.JLabel();
+        passengerNoLabel = new javax.swing.JLabel();
+        cancellationNoLabel = new javax.swing.JLabel();
+        cancellationDateLabel = new javax.swing.JLabel();
+        ticketIDLabel = new javax.swing.JLabel();
+        flightCodeLabel = new javax.swing.JLabel();
+        passengerNoTextField = new javax.swing.JTextField();
+        cancellationNoTextField = new javax.swing.JTextField();
+        cancellationDateTextField = new javax.swing.JTextField();
+        ticketIDTextField = new javax.swing.JTextField();
+        flightCodeTextField = new javax.swing.JTextField();
+        cancleTicketButton = new javax.swing.JButton();
+        closeButton = new javax.swing.JButton();
+
+        setTitle("Ticket Cancellation");
+        getContentPane().setLayout(new java.awt.GridBagLayout());
+
+        titleLabel.setFont(new java.awt.Font("Kalpurush", 1, 24)); // NOI18N
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("Cancle Journey");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 607;
+        gridBagConstraints.ipady = -15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(53, 10, 0, 0);
+        getContentPane().add(titleLabel, gridBagConstraints);
+
+        passengerNoLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        passengerNoLabel.setText("Passenger No");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 71;
+        gridBagConstraints.ipady = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(32, 57, 0, 0);
+        getContentPane().add(passengerNoLabel, gridBagConstraints);
+
+        cancellationNoLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        cancellationNoLabel.setText("Cancellation No");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 70;
+        gridBagConstraints.ipady = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(31, 50, 0, 0);
+        getContentPane().add(cancellationNoLabel, gridBagConstraints);
+
+        cancellationDateLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        cancellationDateLabel.setText("Cancellation Date");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 60;
+        gridBagConstraints.ipady = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(32, 50, 0, 0);
+        getContentPane().add(cancellationDateLabel, gridBagConstraints);
+
+        ticketIDLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        ticketIDLabel.setText("Ticket ID");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 102;
+        gridBagConstraints.ipady = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(31, 50, 0, 0);
+        getContentPane().add(ticketIDLabel, gridBagConstraints);
+
+        flightCodeLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        flightCodeLabel.setText("Flight Code");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 90;
+        gridBagConstraints.ipady = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(29, 50, 0, 0);
+        getContentPane().add(flightCodeLabel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 521;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(32, 4, 0, 0);
+        getContentPane().add(passengerNoTextField, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 521;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(31, 4, 0, 0);
+        getContentPane().add(cancellationNoTextField, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 521;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(28, 4, 0, 0);
+        getContentPane().add(cancellationDateTextField, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 521;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(31, 4, 0, 0);
+        getContentPane().add(ticketIDTextField, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 521;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(29, 4, 0, 0);
+        getContentPane().add(flightCodeTextField, gridBagConstraints);
+
+        cancleTicketButton.setText("Cancle Ticket");
+        cancleTicketButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancleTicketButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(47, 4, 94, 0);
+        getContentPane().add(cancleTicketButton, gridBagConstraints);
+
+        closeButton.setText("Close");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(47, 273, 94, 0);
+        getContentPane().add(closeButton, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        JDesktopPane desktopPane = getDesktopPane();
+        MainMenuHome mainMenuHome = new MainMenuHome();
+        desktopPane.removeAll();
+        try {
+            desktopPane.add(mainMenuHome);
+            mainMenuHome.setVisible(true);
+            desktopPane.moveToFront(mainMenuHome);
+            mainMenuHome.setSize(desktopPane.getWidth(),desktopPane.getHeight());
+            mainMenuHome.setLocation(0,0);
+        } catch (Exception e) {
+        }
+        
+        try {
+            mainMenuHome.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            JOptionPane.showMessageDialog(null,"Following Error Found!!!\n"+ex,"Error!!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void cancleTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleTicketButtonActionPerformed
+        int jOptionClicked = 123456789;
+        String passengerNo = passengerNoTextField.getText();
+        String cancellationNo = cancellationNoTextField.getText();
+        String cancellationDate = cancellationDateTextField.getText();
+        String ticketID = ticketIDTextField.getText();
+        String flightCode = flightCodeTextField.getText();
+        
+        try{
+            connection = DatabaseConnection.Connect();
+            String sql = "INSERT INTO cancellation values('"+passengerNo+"', '"+cancellationNo+"', '"+cancellationDate+"', '"+ticketID+"', '"+flightCode+"')";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+            jOptionClicked = JOptionPane.showConfirmDialog(null, "Ticket Cancled!!","Cancle Confirmation",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION);
+        }catch(SQLException sQLException){
+            JOptionPane.showConfirmDialog(null, sQLException, "SQL Error!!!",JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        }
+        
+        if(jOptionClicked == JOptionPane.OK_OPTION){
+            
+            JDesktopPane desktopPane = getDesktopPane();
+            MainMenuHome mainMenuHome = new MainMenuHome();
+            desktopPane.removeAll();
+            try {
+                desktopPane.add(mainMenuHome);
+                mainMenuHome.setVisible(true);
+                desktopPane.moveToFront(mainMenuHome);
+                mainMenuHome.setSize(desktopPane.getWidth(),desktopPane.getHeight());
+                mainMenuHome.setLocation(0,0);
+            } catch (Exception e) {
+            }
+
+            try {
+                mainMenuHome.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                JOptionPane.showMessageDialog(null,"Following Error Found!!!\n"+ex,"Error!!!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_cancleTicketButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cancellationDateLabel;
+    private javax.swing.JTextField cancellationDateTextField;
+    private javax.swing.JLabel cancellationNoLabel;
+    private javax.swing.JTextField cancellationNoTextField;
+    private javax.swing.JButton cancleTicketButton;
+    private javax.swing.JButton closeButton;
+    private javax.swing.JLabel flightCodeLabel;
+    private javax.swing.JTextField flightCodeTextField;
+    private javax.swing.JLabel passengerNoLabel;
+    private javax.swing.JTextField passengerNoTextField;
+    private javax.swing.JLabel ticketIDLabel;
+    private javax.swing.JTextField ticketIDTextField;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,15 @@
  */
 package airlinesManagementSystem;
 
+import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
+
 /**
  *
  * @author raham
@@ -14,6 +23,9 @@ public class Payment extends javax.swing.JInternalFrame {
     /**
      * Creates new form Payment
      */
+    Connection connection;
+    PreparedStatement preparedStatement;
+    ResultSet resultSet;
     public Payment() {
         initComponents();
     }
@@ -31,6 +43,9 @@ public class Payment extends javax.swing.JInternalFrame {
         pnrNoLabel = new javax.swing.JLabel();
         pnrNoTextField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        paymentDetailsScrollPane = new javax.swing.JScrollPane();
+        paymentDetailsTable = new javax.swing.JTable();
+        closeButton = new javax.swing.JButton();
 
         setTitle("Payment Details");
 
@@ -39,50 +54,143 @@ public class Payment extends javax.swing.JInternalFrame {
 
         pnrNoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pnrNoLabel.setText("PNR No");
+        pnrNoLabel.setPreferredSize(new java.awt.Dimension(35, 25));
 
         pnrNoTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jButton1.setText("Show");
+        jButton1.setPreferredSize(new java.awt.Dimension(70, 25));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        paymentDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "PNR No", "Paid Amount", "Pay Date", "Cheque No", "Card No", "Phone No"
+            }
+        ));
+        paymentDetailsScrollPane.setViewportView(paymentDetailsTable);
+
+        closeButton.setText("Close");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(pnrNoLabel)
-                                .addGap(48, 48, 48)
-                                .addComponent(pnrNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(titleLabel)))
+                        .addComponent(titleLabel)
+                        .addContainerGap(604, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(296, 296, 296)
-                        .addComponent(jButton1)))
-                .addContainerGap(389, Short.MAX_VALUE))
+                        .addComponent(pnrNoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(pnrNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(closeButton)
+                        .addGap(98, 98, 98))))
+            .addComponent(paymentDetailsScrollPane, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(titleLabel)
-                .addGap(65, 65, 65)
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pnrNoLabel)
-                    .addComponent(pnrNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(343, Short.MAX_VALUE))
+                    .addComponent(pnrNoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnrNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(closeButton))
+                .addGap(18, 18, 18)
+                .addComponent(paymentDetailsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        JDesktopPane desktopPane = getDesktopPane();
+        MainMenuHome mainMenuHome = new MainMenuHome();
+        desktopPane.removeAll();
+        try {
+            desktopPane.add(mainMenuHome);
+            mainMenuHome.setVisible(true);
+            desktopPane.moveToFront(mainMenuHome);
+            mainMenuHome.setSize(desktopPane.getWidth(),desktopPane.getHeight());
+            mainMenuHome.setLocation(0,0);
+        } catch (Exception e) {
+        }
+        
+        try {
+            mainMenuHome.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            JOptionPane.showMessageDialog(null,"Following Error Found!!!\n"+ex,"Error!!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String pnrCode = pnrNoTextField.getText();
+        
+        try {
+            connection = DatabaseConnection.Connect();
+            String sql = "select pnr_no,paid_amt,pay_date,cheque_no,card_no,ph_no from payment where pnr_no = '"+pnrCode+"'";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            paymentDetailsTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, sQLException, "SQL Error!!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton closeButton;
     private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane paymentDetailsScrollPane;
+    private javax.swing.JTable paymentDetailsTable;
     private javax.swing.JLabel pnrNoLabel;
     private javax.swing.JTextField pnrNoTextField;
     private javax.swing.JLabel titleLabel;

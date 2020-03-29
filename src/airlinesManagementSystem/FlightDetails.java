@@ -6,7 +6,13 @@
 package airlinesManagementSystem;
 
 import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -18,6 +24,9 @@ public class FlightDetails
     /**
      * Creates new form FlightDetails
      */
+    Connection connection;
+    PreparedStatement preparedStatement;
+    ResultSet resultSet;
     public FlightDetails() {
         initComponents();
     }
@@ -48,6 +57,11 @@ public class FlightDetails
         flightCodeLabel.setText("Flight Code");
 
         showButton.setText("Show");
+        showButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showButtonActionPerformed(evt);
+            }
+        });
 
         flightInformationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -159,6 +173,22 @@ public class FlightDetails
            
         }
     }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void showButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showButtonActionPerformed
+       String flightCode = flightCodeTextField.getText();
+                
+                try {
+                    connection = DatabaseConnection.Connect();
+                    String sql = "select f_code,f_name,src,dst,capacity,class_code,class_name from flight ,sector where f_code = '"+flightCode+"'";
+                    preparedStatement = connection.prepareStatement(sql);
+                    resultSet = preparedStatement.executeQuery();
+                    flightInformationTable.setModel(DbUtils.resultSetToTableModel(resultSet));	
+                    connection.close();
+                    
+                }catch(SQLException sQLException){
+                    JOptionPane.showMessageDialog(null, sQLException, "SQL Error!!!", JOptionPane.ERROR_MESSAGE);
+                }
+    }//GEN-LAST:event_showButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
