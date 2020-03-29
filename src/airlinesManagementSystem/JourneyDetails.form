@@ -24,10 +24,6 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Component id="jScrollPane1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
               <Component id="departureLabel" min="-2" max="-2" attributes="0"/>
@@ -48,6 +44,10 @@
               <Component id="titleLabel" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="journeyDetailsScrollPane" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -65,7 +65,7 @@
                   <Component id="closeButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="389" max="32767" attributes="0"/>
+              <Component id="journeyDetailsScrollPane" pref="540" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -106,7 +106,7 @@
         <Property name="text" type="java.lang.String" value="Show"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+    <Container class="javax.swing.JScrollPane" name="journeyDetailsScrollPane">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
@@ -116,8 +116,8 @@
         <Component class="javax.swing.JTable" name="journeyDetailsTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="25">
-                <Column editable="true" title="PNR Nol" type="java.lang.Object"/>
+              <Table columnCount="7" rowCount="34">
+                <Column editable="true" title="PNR No" type="java.lang.Object"/>
                 <Column editable="true" title="Ticket ID" type="java.lang.Object"/>
                 <Column editable="true" title="Flight Code" type="java.lang.Object"/>
                 <Column editable="true" title="Journey Date" type="java.lang.Object"/>

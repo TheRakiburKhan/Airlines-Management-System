@@ -43,7 +43,7 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
         departureLabel = new javax.swing.JLabel();
         destinationLabel = new javax.swing.JLabel();
         showButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        journeyDetailsScrollPane = new javax.swing.JScrollPane();
         journeyDetailsTable = new javax.swing.JTable();
         titleLabel = new javax.swing.JLabel();
         closeButton = new javax.swing.JButton();
@@ -88,13 +88,22 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "PNR Nol", "Ticket ID", "Flight Code", "Journey Date", "Journey Time", "Departure", "Destination"
+                "PNR No", "Ticket ID", "Flight Code", "Journey Date", "Journey Time", "Departure", "Destination"
             }
         ));
-        jScrollPane1.setViewportView(journeyDetailsTable);
+        journeyDetailsScrollPane.setViewportView(journeyDetailsTable);
 
         titleLabel.setFont(new java.awt.Font("Kalpurush", 1, 24)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -111,9 +120,6 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(95, 95, 95)
                 .addComponent(departureLabel)
@@ -132,6 +138,9 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
                 .addContainerGap()
                 .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(journeyDetailsScrollPane)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +156,7 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
                     .addComponent(showButton)
                     .addComponent(closeButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                .addComponent(journeyDetailsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -198,7 +207,7 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
     private javax.swing.JLabel departureLabel;
     private javax.swing.JComboBox<String> destinationComboBox;
     private javax.swing.JLabel destinationLabel;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane journeyDetailsScrollPane;
     private javax.swing.JTable journeyDetailsTable;
     private javax.swing.JButton showButton;
     private javax.swing.JLabel titleLabel;
