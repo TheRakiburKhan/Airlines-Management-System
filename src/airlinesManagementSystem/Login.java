@@ -143,6 +143,7 @@ public class Login
             if (resultSet.next()) {
                 MainMenu mainMenu = new MainMenu();
                 mainMenu.setVisible(true);
+                connection.close();
                 this.dispose();
             } else {
                jOptionClicked = JOptionPane.showConfirmDialog(null,"Invalied Login!!!", "Error!", 

@@ -9,6 +9,7 @@ import java.beans.PropertyVetoException;
 import java.sql.*;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -17,8 +18,8 @@ import javax.swing.JOptionPane;
 public class JourneyDetails extends javax.swing.JInternalFrame  {
 
     Connection connection;
-    PreparedStatement preparedStatementCombo;
-    ResultSet resultSetCombo;
+    PreparedStatement preparedStatementCombo, preparedStatement;
+    ResultSet resultSetCombo, resultSet;
     /**
      * Creates new form JourneyDetails
      */
@@ -43,7 +44,7 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
         departureLabel = new javax.swing.JLabel();
         destinationLabel = new javax.swing.JLabel();
         showButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        journeyDetailsScrollPane = new javax.swing.JScrollPane();
         journeyDetailsTable = new javax.swing.JTable();
         titleLabel = new javax.swing.JLabel();
         closeButton = new javax.swing.JButton();
@@ -61,6 +62,11 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
         destinationLabel.setText("Destination");
 
         showButton.setText("Show");
+        showButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showButtonActionPerformed(evt);
+            }
+        });
 
         journeyDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -88,13 +94,22 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "PNR Nol", "Ticket ID", "Flight Code", "Journey Date", "Journey Time", "Departure", "Destination"
+                "PNR No", "Ticket ID", "Flight Code", "Journey Date", "Journey Time", "Departure", "Destination"
             }
         ));
-        jScrollPane1.setViewportView(journeyDetailsTable);
+        journeyDetailsScrollPane.setViewportView(journeyDetailsTable);
 
         titleLabel.setFont(new java.awt.Font("Kalpurush", 1, 24)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -111,9 +126,6 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(95, 95, 95)
                 .addComponent(departureLabel)
@@ -132,6 +144,9 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
                 .addContainerGap()
                 .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(journeyDetailsScrollPane)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +162,7 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
                     .addComponent(showButton)
                     .addComponent(closeButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                .addComponent(journeyDetailsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -170,9 +185,31 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
         try {
             mainMenuHome.setSelected(true);
         } catch (PropertyVetoException ex) {
-           
+            JOptionPane.showMessageDialog(null,"Following Error Found!!!\n"+ex,"Error!!!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void showButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showButtonActionPerformed
+        String departure =(String) departureComboBox.getSelectedItem().toString();
+        String destination = (String) destinationComboBox.getSelectedItem().toString();
+        try {
+            String sql = "select pnr_no,ticket_id,f_code,jny_date,jny_time,src,dst from reservation where src = '"+departure+"' and dst = '"+destination+"'";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                journeyDetailsTable.setModel(DbUtils.resultSetToTableModel(
+                        resultSet));
+            }
+            else{
+                JOptionPane.showMessageDialog(null,
+                        "No Flights between Departure and Destination","Warning!!!",JOptionPane.WARNING_MESSAGE);
+            }
+            
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, sQLException, "SQL Error!!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_showButtonActionPerformed
 
     private void FillCombo(){
     try{
@@ -186,8 +223,8 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
             destinationComboBox.addItem(dst);
             departureComboBox.addItem(src);
         }
-    }catch(SQLException e){        
-        JOptionPane.showMessageDialog(null, e);
+    }catch(SQLException sQLException){        
+        JOptionPane.showMessageDialog(null, sQLException, "SQL Error!!!", JOptionPane.ERROR_MESSAGE);
     }
 }
     
@@ -198,7 +235,7 @@ public class JourneyDetails extends javax.swing.JInternalFrame  {
     private javax.swing.JLabel departureLabel;
     private javax.swing.JComboBox<String> destinationComboBox;
     private javax.swing.JLabel destinationLabel;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane journeyDetailsScrollPane;
     private javax.swing.JTable journeyDetailsTable;
     private javax.swing.JButton showButton;
     private javax.swing.JLabel titleLabel;
